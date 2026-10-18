@@ -1,0 +1,20 @@
+\begin{tikzpicture}[>=triangle 45,
+  desc/.style={
+		scale=1.0,
+		rectangle,
+		rounded corners,
+		draw=black, 
+		}]
+  
+ 
+  \node [desc,minimum height=0.6cm] (pol) at   (0,2) {$LLM_{\pi/CoT}^\psi(s)\rightarrow a$};
+  \node [desc,minimum height=0.6cm] (tm) at   (0,0.5) {$LLM_{eval}^\psi(s,a) \rightarrow (s',a,r)$};
+  \draw (tm.west) edge[->,in=180,out=180,looseness=2.5] node[left]
+  {$(s', a, r)$} (pol.west);
+  \draw (pol.east) edge[->,out=0,in=0,looseness=2.5] node[right] {$(s,a)$} (tm.east);
+  %\draw (tm.north) edge[<-,out=10,in=350,looseness=2.5] node[right] {$\psi$} (pol.south);
+  %\draw (pol.south) edge[<-,out=190,in=170,looseness=2.5] node[left] {$\psi'$} (tm.north);
+  
+
+\end{tikzpicture}
+

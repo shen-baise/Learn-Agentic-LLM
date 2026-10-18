@@ -1,0 +1,19 @@
+\begin{tikzpicture}[>=triangle 45,
+  desc/.style={
+		scale=1.0,
+		rectangle,
+		rounded corners,
+		draw=black, 
+		}]
+  
+
+
+  \node [desc,minimum height=0.6cm] (tm) at   (0,0.5) {Environment: $T(s,a) \rightarrow s', R(s')\rightarrow r$};
+  \node [desc,minimum height=0.6cm] (pol) at   (0,2) {Agent:  $\pi_{LLM_{P\pi}}(s, r) \rightarrow a$};
+  \draw (tm.west) edge[->,in=180,out=180,looseness=2.5] node[left]
+  {$(s', r)$} (pol.west);
+  \draw (pol.east) edge[->,out=0,in=0,looseness=2.5] node[right] {$a$} (tm.east);
+  
+
+\end{tikzpicture}
+

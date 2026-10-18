@@ -1,0 +1,22 @@
+\begin{tikzpicture}[>=triangle 45,
+  desc/.style={
+		scale=1.0,
+		rectangle,
+		rounded corners,
+		draw=black, 
+		}]
+  
+
+
+  \node [desc,minimum height=0.6cm] (env) at   (4.5,0.5) {Environment};
+  \node [desc,minimum height=0.6cm] (tm) at   (0.5,0.5) {Agent's Transition Model};
+  \node [desc,minimum height=0.6cm] (pol) at   (2.5,2) {Policy/Value};
+  \draw (env.west) edge[->,in=0,out=180,looseness=2.5] node[below]
+  {learning} (tm.east);
+  \draw (pol.east) edge[->,out=0,in=90,looseness=1.5] node[right] {acting} (env.north);
+  \draw (tm.north) edge[->,out=90,in=180,looseness=1.5] node[left]
+  {planning} (pol.west);
+  
+
+\end{tikzpicture}
+

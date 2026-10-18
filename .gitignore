@@ -1,0 +1,9 @@
+node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+*.local
+.DS_Store
+arXiv-2610.13455v1/
+2610.13455v1.md
+2610.13455v1.pdf
+split_chapters.js

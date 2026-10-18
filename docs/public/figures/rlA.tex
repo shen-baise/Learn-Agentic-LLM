@@ -1,0 +1,17 @@
+\begin{tikzpicture}[>=triangle 45,
+  desc/.style={
+		scale=1.0,
+		rectangle,
+		rounded corners,
+		draw=black, 
+		}]
+  
+  \node [desc,minimum height=0.6cm] (prompt) at   (0,0) {Query};
+  \node [desc,minimum height=0.6cm] (agent) at   (2,0) {LLM};
+  \node [desc,minimum height=0.6cm] (answer) at   (4,0) {Answer};
+  \draw (prompt.east) edge[->,in=180,out=0,looseness=2.5] node[right] { } (agent.west);
+  \draw (agent.east) edge[->,out=0,in=180,looseness=2.5] node[right] { } (answer.west);
+  
+
+\end{tikzpicture}
+

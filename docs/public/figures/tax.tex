@@ -1,0 +1,42 @@
+
+
+    \tikzset{
+        my node/.style={
+            draw=gray,
+            inner color=gray!5,
+            outer color=gray!10,
+            thick,
+            minimum width=1cm,
+            rounded corners=3,
+            text height=1.5ex,
+            text depth=0ex,
+            font=\sffamily,
+        }
+    }
+    \begin{forest}
+        for tree={%
+            my node,
+            l sep+=5pt,
+            grow'=east,
+            edge={gray, thick},
+            parent anchor=east,
+            child anchor=west,
+            if n children=0{tier=last}{},
+            edge path={
+                \noexpand\path [draw, \forestoption{edge}] (!u.parent anchor) -- +(10pt,0) |- (.child anchor)\forestoption{edge label};
+            },
+            if={isodd(n_children())}{
+                for children={
+                    if={equal(n,(n_children("!u")+1)/2)}{calign with current}{}
+                }
+            }{}
+        }
+        [Agentic LLM
+        [Reasoning 
+        [Multi-step][Self Reflection][Retrieval Augmentation]]
+        [Acting
+        [World Models/VLA][Robot/Tools][Assistants]]
+        [Interacting
+        [Social Capabilities][Role-based Interaction][Open-ended Societies]]
+        ]
+    \end{forest}

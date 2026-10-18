@@ -1,0 +1,23 @@
+\begin{tikzpicture}[>=triangle 45,
+  desc/.style={
+		scale=1.0,
+		rectangle,
+		rounded corners,
+		draw=black, 
+		}]
+  
+  \node [desc,minimum height=0.6cm] (prompt) at   (0,1) {Query  +  step1, step2, step3 = ex1};
+  \node [desc,minimum height=0.6cm] (agent) at   (4,1) {LLM};
+  \node [desc,minimum height=0.6cm] (answer) at   (6,1) {Answer};
+  \draw (prompt.east) edge[->,in=180,out=0,looseness=2.5] node[right] { } (agent.west);
+  \draw (agent.east) edge[->,out=0,in=180,looseness=2.5] node[right] { } (answer.west);
+
+\node [desc,minimum height=0.6cm] (prompt) at   (0,0) {Query  +  "Let's think step by step" = ex1};
+  \node [desc,minimum height=0.6cm] (agent) at   (5,0) {LLM};
+  \node [desc,minimum height=0.6cm] (answer) at   (7,0) {Answer};
+  \draw (prompt.east) edge[->,in=180,out=0,looseness=2.5] node[right] { } (agent.west);
+  \draw (agent.east) edge[->,out=0,in=180,looseness=2.5] node[right] { } (answer.west);
+
+
+\end{tikzpicture}
+

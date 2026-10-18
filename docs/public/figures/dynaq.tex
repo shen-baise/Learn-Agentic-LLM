@@ -1,0 +1,30 @@
+
+        \begin{algorithmic}
+        % \Require
+        % \Statex States $\mathcal{X} = \{1, \dots, n_x\}$
+        % \Statex Actions $\mathcal{A} = \{1, \dots, n_a\},\qquad A: \mathcal{X} \Rightarrow \mathcal{A}$
+        % \Statex Reward function $R: \mathcal{X} \times \mathcal{A} \rightarrow \mathbb{R}$
+        % \Statex Black-box (probabilistic) transition function $T: \mathcal{X} \times \mathcal{A} \rightarrow \mathcal{X}$
+        % \Statex Learning rate $\alpha \in [0, 1]$, typically $\alpha = 0.1$
+        % \Statex Discounting factor $\gamma \in [0, 1]$
+%        \Procedure{Dyna-Q}{}
+         \State Initialize $Q(s,a) \rightarrow \mathbb{R}$ randomly
+            \State Initialize $M(s,a) \rightarrow \mathbb{R}\times S$ randomly \Comment{Model}
+            \Repeat
+                \State Select $s \in S$ randomly
+                \State $a \gets \pi(s)$ \Comment{$\pi(s)$ can be
+                  $\epsilon$-greedy$(s)$ based on $Q$}
+                \State $(s',r) \gets E(s, a)$ \Comment{Learn new
+                  state and reward from environment}
+                \State $Q(s, a) \gets  Q(s, a) + \alpha \cdot [r +
+                \gamma \cdot \max_{a'} Q(s', a') - Q(s,a)]$
+                \State $M(s, a) \gets (s', r)$
+                \For{$n = 1, \dots, N$}
+                    \State Select $\hat{s}$ and $\hat{a}$ randomly
+                    \State $(s', r) \gets M(\hat{s}, \hat{a})$
+                    \Comment{Plan imagined state and reward from  model}
+                    \State $Q(\hat{s}, \hat{a}) \gets  Q(\hat{s}, \hat{a}) + \alpha \cdot [r + \gamma \cdot \max_{a'} Q(s', a')-Q(\hat{s},\hat{a})]$
+                \EndFor
+            \Until $Q$ converges
+%        \EndProcedure
+        \end{algorithmic}

@@ -1,0 +1,70 @@
+
+% rag_pipeline.tikz.tex
+% TikZ-only figure (no preamble). Include in your chapter with \input.
+\begin{tikzpicture}[
+    font=\small,
+    node distance=9mm and 9mm,
+    >=Latex,
+    process/.style={draw, rounded corners=2pt, align=center, minimum width=28mm, minimum height=8mm},
+    store/.style={draw, rounded corners=2pt, align=center, minimum width=28mm, minimum height=8mm, dashed},
+    group/.style={draw, rounded corners=4pt, inner sep=3pt, fill=black!3},
+    dot/.style={circle, fill=black, inner sep=0.7pt},
+    every label/.style={font=\small}
+  ]
+
+  % Rows Y positions
+  \tikzset{rowy/.store in=\rowy}
+  \def\rowA{0}
+  \def\rowB{-1.8}
+  \def\rowC{-4.0}
+
+  % --- Top row: online pipeline ---
+  \node[process] (index)            at (0, \rowA) {Indexing};
+  \node[process, right=of index] (query)           {Query\\Construction};
+  \node[process, right=of query, xshift=3mm] (retrieve)        {Candidate\\Retrieval};
+  \node[process, right=of retrieve] (rerank)        {Re-ranking};
+  \node[process, right=of rerank] (context)       {Context\\Assembly};
+  \node[process, right=of context] (generate)      {Grounded\\Generation};
+  \node[process, right=of generate] (attrib)       {Attribution\\\& Logging};
+
+  \draw[->] (index) -- (query);
+  \draw[->] (query) -- (retrieve);
+  \draw[->] (retrieve) -- (rerank);
+  \draw[->] (rerank) -- (context);
+  \draw[->] (context) -- (generate);
+  \draw[->] (generate) -- (attrib);
+
+  % --- Middle row: retrieval internals ---
+  \node[store] (sparse)  at ($(retrieve.south) + (-10mm, \rowB)$) {Sparse Index\\(BM25/SPLADE)};
+  \node[store] (dense)   at ($(retrieve.south) + (18mm, \rowB)$)  {Vector Index\\(ANN: HNSW/IVF-PQ)};
+
+  \node[process] (hybrid) at ($(retrieve)!0.5!(rerank) + (0, \rowB)$) {Hybrid Fusion};
+  \draw[->] (sparse) -- (hybrid);
+  \draw[->] (dense)  -- (hybrid);
+  \draw[->] (hybrid) -- (rerank);
+
+  % --- Bottom row: data + governance ---
+  \node[store] (corpus)  at ($(index.south) + (0, \rowC)$) {Document Store /\\Corpus};
+  \node[store] (meta)    at ($(context.south) + (-20mm, \rowC)$) {Metadata,\\ACLs \& Versions};
+  \node[store] (logs)    at ($(attrib.south) + (0, \rowC)$) {Traces,\\Telemetry};
+
+  \draw[->] (corpus) -- (index);
+  \draw[->] (meta)   -- (context);
+  \draw[->] (attrib) -- (logs);
+
+  % --- Query strategies box ---
+  \node[group, fit={(query) ($(query.south)+(0,-13mm)$)}, label={[align=center]below:Rewriting \\ Decomposition \\ HyDE / Self-RAG}] (qbox) {};
+  \draw[-{Latex}] (qbox.north) -- ($(query.south)+(0,-0.5mm)$);
+
+  % --- Diversity / dedup annotations ---
+  \node[group, fit={(context) ($(context.south)+(0,-12mm)$)}, label={[align=center]below:Diversity (MMR) \\ Dedup (MinHash/SimHash) \\ Freshness Filters}] (cbox) {};
+  \draw[-{Latex}] (cbox.north) -- ($(context.south)+(0,-0.5mm)$);
+
+  % --- Notes at generation ---
+  \node[group, fit={(generate) ($(generate.south)+(0,-12mm)$)}, label={[align=center]below:Citation Required \\ NLI/Entailment Checks \\ Abstain on Low Support}] (gbox) {};
+  \draw[-{Latex}] (gbox.north) -- ($(generate.south)+(0,-0.5mm)$);
+
+  % --- Title banner (optional) ---
+  % \node[align=center] at ($(query.north)!0.5!(attrib.north) + (0,8mm)$) {\textbf{RAG Pipeline}};
+
+\end{tikzpicture}
