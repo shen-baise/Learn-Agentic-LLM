@@ -5,6 +5,7 @@ export default defineConfig({
   title: '智能体大语言模型',
   description: 'Agentic Large Language Models 中文翻译',
   lang: 'zh-CN',
+  base: '/Learn-Agentic-LLM/',
 
   ignoreDeadLinks: true,
 
@@ -82,7 +83,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/' }
+      { icon: 'github', link: 'https://github.com/shen-baise/Learn-Agentic-LLM' }
     ],
 
     footer: {
